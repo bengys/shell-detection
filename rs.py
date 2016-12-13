@@ -1,4 +1,3 @@
-import smtplib
 import re
 import time
 	
@@ -25,16 +24,8 @@ def parse_rawkeys():
 				kl_file.write(now + ": " + ''.join(line_buf)+'\n')
 				line_buf[:] = []			
 	kl_file.write(''.join(line_buf))
+	
 	rk_file.close()
 	kl_file.close()
 	open('rawkey.txt','w').close
 
-
-def email_alert(IP):
-	server = smtplib.SMTP('smtp.gmail.com', 587)
-	server.ehlo()
-	server.starttls()
-	server.login("reverseshelldetector@gmail.com","niceandinsecurepassword")
-	msg = "A reverse shell has been detected on your computer...\n dont worry about it too much..it is being monitored \n connection is from: " + IP
-	server.sendmail("reverseshelldetector@gmail.com","bshear13@gmail.com", msg)
-	server.quit()
