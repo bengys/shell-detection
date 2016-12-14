@@ -1,7 +1,11 @@
+# Python module for email functionality
+# Benji Shear - 14/12/16
+
 import smtplib
 import poplib
 from email import parser
 
+#Sends email with details of RS connection
 def email_alert(IP):
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.ehlo()
@@ -11,6 +15,7 @@ def email_alert(IP):
 	server.sendmail("reverseshelldetector@gmail.com","bshear13@gmail.com", msg)
 	server.quit()
 
+#Checks for lastest email in inbox
 def check_email():
 	pop_conn = poplib.POP3_SSL('pop.gmail.com')
 	pop_conn.user('reverseshelldetector@gmail.com')

