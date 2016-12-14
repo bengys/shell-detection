@@ -17,7 +17,7 @@ def send_email(msg):
 
 # Alerts owner of RS with email
 def email_alert(IP):
-	msg = "ATTENTION YOU! \n A potential reverse shell process has been detected on your beloved computer \n Dont stress too much! It is being monitored. \n The connection is from: " + IP + "\n Reply to this messagage in the subject line with: \n END - to terminate shell \n LOG - to recieve an email with keystrokes"
+	msg = "ATTENTION YOU! \n A potential shell process has been detected on your beloved computer \n Dont stress too much! It is being monitored. \n The connection is from: " + IP + "\n Reply to this messagage in the subject line with: \n END - to terminate shell \n LOG - to recieve an email with keystrokes"
 	send_email(msg)
 
 # Emails user with keystroke log	
