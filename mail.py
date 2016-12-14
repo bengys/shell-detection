@@ -5,17 +5,31 @@ import smtplib
 import poplib
 from email import parser
 
-#Sends email with details of RS connection
-def email_alert(IP):
+# Send email 
+def send_email(msg):
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.ehlo()
 	server.starttls()
 	server.login("reverseshelldetector@gmail.com", "niceandinsecurepassword")
-	msg = "ATTENTION YOU! \n A potential reverse shell process has been detected on your beloved computer \n Dont stress too much! It is being monitored. \n The connection is from: " + IP + "\n To end the RS process reply to this message with YES in the subject line"
 	server.sendmail("reverseshelldetector@gmail.com","bshear13@gmail.com", msg)
 	server.quit()
 
-#Checks for lastest email in inbox
+
+# Alerts owner of RS with email
+def email_alert(IP):
+	msg = "ATTENTION YOU! \n A potential reverse shell process has been detected on your beloved computer \n Dont stress too much! It is being monitored. \n The connection is from: " + IP + "\n Reply to this messagage in the subject line with: \n END - to terminate shell \n LOG - to recieve an email with keystrokes"
+	send_email(msg)
+
+# Emails user with keystroke log	
+def email_log():
+	log_msg='The following keystrokes have been recorded:'
+	file = open('keystrokes.log','r')
+	for line in file :
+		log_msg+= "\n" + line
+	file.close()	
+	send_email(log_msg)
+	
+# Checks for lastest email in inbox
 def check_email():
 	pop_conn = poplib.POP3_SSL('pop.gmail.com')
 	pop_conn.user('reverseshelldetector@gmail.com')

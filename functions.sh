@@ -7,12 +7,12 @@
 
 #Reads input from strace of the shell and isolates and formats the keystrokes from the reverse shell
 function keylogger(){ 
-			process_on="$(ps -A | grep $1)"
-			
-			#Check for new data
-			if [ -s rawkey.txt ] ; then
-				python -c "import rs; rs.parse_rawkeys();"
-			fi
+		
+		process_on="$(ps -A | grep $1)"	
+		#Check for new data
+		if [ -s rawkey.txt ] ; then
+			python -c "import rs; rs.parse_rawkeys();"
+		fi
 }
 
 #=======================================================================
@@ -28,9 +28,11 @@ function detect_reverse_shell(){
 		# If a RS process has been detected
 		if [ "$shell_pid" != ""  ] ; then
 			shell_detected=true
+			echo "!...!...!...!...!...!"
 			echo "A new reverse shell process has been detected with PID: $shell_pid"
 			remote_IP="$(lsof -i| grep $shell_pid| awk '{print $8}'| head -n1| sed -n -e 's/^.*->//p' )"
 			echo "From IP: $remote_IP"
+			echo "!...!...!...!...!...!"
 			#Notify the user by email
 			python -c "import mail;mail.email_alert('$remote_IP')"
 		fi
@@ -42,9 +44,15 @@ function detect_reverse_shell(){
 #Checks for a command from user by email to kill RS process
 function detect_email_command(){
 	#Check in box
-	em_content="$(python -c "import mail;mail.check_email();")"	
-	if [ "$em_content" = "YES" ] ; then
+	em_content="$(python -c "import mail;mail.check_email();")" > /dev/null
+	if [ "$em_content" = "END" ] ; then
 		kill $shell_pid
 		echo "Reverse shell session has been killed"
+		echo " 	̿' ̿'\̵͇̿̿\з=( ͡ °_̯͡° )=ε/̵͇̿̿/'̿'̿ ̿ "
 	fi	
+	
+	if [ "$em_content" = "LOG" ] ; then
+		python -c "import mail;mail.email_log()"
+	fi
+	
 }

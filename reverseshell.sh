@@ -11,6 +11,9 @@
 :> rawkey.txt
 
 echo "Reverse shell detection is active"
+echo "..."
+echo "..."
+echo "..."
 
 # Function to check for existence of reverse shell. Runs as infinite loop till detection
 detect_reverse_shell
@@ -27,4 +30,5 @@ while [ "$process_on" != "" ] ; do
 	
 	# Check inbox for command to terminate RS process
 	detect_email_command $shell_pid
+	
 done
