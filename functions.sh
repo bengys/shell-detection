@@ -12,16 +12,16 @@ function detect_reverse_shell(){
 		shell_pid="$(lsof -i | grep -w -e 'bash' -e 'sh' | awk '{print $2}'| head -n1 )"	
 		if [ "$shell_pid" != ""  ] ; then
 			shell_detected=true
-			echo $shell_pid
+			echo "A new reverse shell process has been detected with PID: $shell_pid"
 			remote_IP="$(lsof -i| grep $shell_pid| awk '{print $8}'| head -n1| sed -n -e 's/^.*->//p' )"
-			echo $remote_IP
-			python -c "import email;email.email_alert('$remote_IP')"
+			echo "From IP: $remote_IP"
+			python -c "import mail;mail.email_alert('$remote_IP')"
 		fi
 	done
 }
 
 function detect_email_command(){
-	em_content="$(python -c "import email;email.check_email();")"	
+	em_content="$(python -c "import mail;mail.check_email();")"	
 	if [ "$em_content" = "YES" ] ; then
 		kill $shell_pid
 		echo "Reverse shell session has been killed"
