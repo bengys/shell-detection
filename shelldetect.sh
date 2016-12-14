@@ -18,10 +18,10 @@ echo "..."
 # Function to check for existence of reverse shell. Runs as infinite loop till detection
 detect_shell
 
-# Trace system calls related to 'read' (input from RS) for the RS process ID
+# Trace system calls related to 'read' for the shell process ID
 strace -p$shell_pid -o rawkey.txt -e trace=read & > /dev/null
 
-# Track all keystrokes from RS till process terminated
+# Track all keystrokes from shell till process terminated
 process_on="null"
 while [ "$process_on" != "" ] ; do
 	

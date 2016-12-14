@@ -41,9 +41,7 @@ function detect_shell(){
 
 #=======================================================================
 
-#Checks for a command from user by email to kill shell process
 function detect_email_command(){
-	#Check in box
 	em_content="$(python -c "import mail;mail.check_email();")" > /dev/null
 	if [ "$em_content" = "END" ] ; then
 		kill $shell_pid
